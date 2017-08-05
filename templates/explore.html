@@ -1,0 +1,47 @@
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+    $('form').submit(function(event) {
+        event.preventDefault();
+
+        var el = $(event.target);
+        var request = {};
+
+        request.command = el.find('#command').val();
+
+        $.post('/run', request, function(data, textStatus, jqXHR) {
+            var time = new Date(Date.now());
+            var seconds = time.getSeconds();
+            var minutes = time.getMinutes();
+            var hours = time.getHours();
+
+            var line = $('<div>', {});
+            var answer = $('<p>', {}).text(data);
+            var question = $('<p>', {}).text(request.command);
+
+            var time = $('<span>', {
+                style: 'font-weight: bold; padding: 15px;'
+            }).text('' + hours + ':' + minutes + ':' + seconds);
+
+            question.prepend(time);
+
+            question.appendTo(line);
+            answer.appendTo(line);
+
+            line.appendTo('#submittedCommands');
+        });
+    });
+});
+    </script>
+</head>
+<body>
+    <h1>Hello, world!</h1>
+    <form>
+        <input type="text" id="command" name="command" />
+        <button type="submit">Run</button>
+    </form>
+
+    <div id="submittedCommands">
+    </div>
+</body>
