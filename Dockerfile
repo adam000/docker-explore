@@ -1,10 +1,10 @@
-FROM golang:1.8.3
+FROM golang:1.15.3
 
 WORKDIR /go/src/app
 
 COPY . .
 
-RUN go-wrapper download
-RUN go-wrapper install
+RUN go get -d -v ./...
+RUN go build -v ./...
 
-CMD ["go-wrapper", "run"]
+CMD ["./app"]
