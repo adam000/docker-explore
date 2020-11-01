@@ -1,8 +1,6 @@
 FROM golang:1.15.3 as build
 ENV GO111MODULE on
 
-WORKDIR /go/src/app
-
 # Warm up the module cache.
 # Only copy in go.mod and go.sum to increase Docker cache hit rate.
 COPY go.mod go.sum /src/
